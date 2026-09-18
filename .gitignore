@@ -2,6 +2,7 @@ node_modules/
 dist/
 .env
 .DS_Store
+/docs/
 
 # compiled Go template binary
 templates/go-gin/go-gin

@@ -3,16 +3,17 @@ name: open-meteo-weather
 display_name: Open-Meteo Weather
 description: >-
   Current conditions plus hourly and daily forecasts for any latitude/longitude,
-  from the free Open-Meteo API, priced per call in USDC.e on the Kite chain.
+  from a commercially licensed Open-Meteo API, priced per call on Kite.
+  Draft targeting testnet; public deployment and paid acceptance are pending.
 maintainer:
-  github: lienhage
+  github: dajiangjunok
 status: draft
-network: eip155:2366
+network: eip155:2368
 pay_to: "0x0000000000000000000000000000000000000000"   # quote it: bare 0x... parses as a YAML integer
 upstream:
   name: Open-Meteo
-  url: https://open-meteo.com
-  requires_api_key: false
+  url: https://customer-api.open-meteo.com/v1
+  requires_api_key: true
   terms_url: https://open-meteo.com/en/terms
 source: typescript-express
 endpoints:
@@ -21,6 +22,8 @@ endpoints:
     summary: Weather forecast for a coordinate; proxies Open-Meteo /v1/forecast.
     price_usd: "0.001"
     example_request:
+      # Candidate input; only local mocked execution is recorded in EVIDENCE.md.
+      # Complete paid HTTPS acceptance before upgrading status.
       query:
         latitude: 52.52
         longitude: 13.41
@@ -30,5 +33,6 @@ endpoints:
     pitfalls:
       - "latitude and longitude are required; Open-Meteo returns 400 without both"
       - "unknown variable names in current/hourly/daily return 400 (see https://open-meteo.com/en/docs)"
+      - "GET only; upstream errors and timeouts are not settled"
 categories: [weather, data]
 tags: [weather, forecast, open-meteo, geo]

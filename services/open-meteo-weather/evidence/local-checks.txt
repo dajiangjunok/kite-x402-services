@@ -1,0 +1,299 @@
+Kind: local acceptance with mocked HTTP upstream/facilitator; no real payments
+Started: 2026-09-18T15:13:12.663Z
+Runtime: v25.2.1 (darwin/arm64)
+Source fingerprints: checked-files.json
+
+Time: 2026-09-18T15:13:13.201Z
+Directory: repository root
+Command: npm run validate
+Exit: 0
+
+> validate
+> node scripts/validate.mjs
+
+✓ 1 service manifest(s) valid
+
+Time: 2026-09-18T15:13:14.510Z
+Directory: services/open-meteo-weather
+Command: npm run typecheck
+Exit: 0
+
+> open-meteo-weather@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+Time: 2026-09-18T15:13:16.221Z
+Directory: services/open-meteo-weather
+Command: npm test
+Exit: 0
+
+> open-meteo-weather@0.1.0 test
+> npm run build && node --test --test-reporter=tap test/*.test.mjs
+
+
+> open-meteo-weather@0.1.0 build
+> tsc -p tsconfig.json
+
+TAP version 13
+# Subtest: Acceptance refuses signing changed amount, recipient, network, asset, domain or upfront flow
+ok 1 - Acceptance refuses signing changed amount, recipient, network, asset, domain or upfront flow
+  ---
+  duration_ms: 6.19675
+  type: 'test'
+  ...
+# Subtest: Acceptance requires a public HTTPS origin without URL credentials, paths or queries
+ok 2 - Acceptance requires a public HTTPS origin without URL credentials, paths or queries
+  ---
+  duration_ms: 0.384459
+  type: 'test'
+  ...
+# Subtest: Acceptance verifies requested forecast fields rather than trusting HTTP 200
+ok 3 - Acceptance verifies requested forecast fields rather than trusting HTTP 200
+  ---
+  duration_ms: 0.52275
+  type: 'test'
+  ...
+# Subtest: AC-01: mainnet 402 challenge matches exact price, asset, network, payee and EIP-712 domain
+ok 4 - AC-01: mainnet 402 challenge matches exact price, asset, network, payee and EIP-712 domain
+  ---
+  duration_ms: 35.658416
+  type: 'test'
+  ...
+# {"http_status":402,"payment_required":{"x402Version":2,"error":"Payment required","resource":{"url":"http://127.0.0.1:55151/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m%2Cwind_speed_10m&hourly=temperature_2m&forecast_days=1","description":"Open-Meteo weather forecast for a coordinate","mimeType":"application/json"},"accepts":[{"scheme":"exact","network":"eip155:2366","amount":"123456","asset":"0x7aB6f3ed87C42eF0aDb67Ed95090f8bF5240149e","payTo":"0x1111111111111111111111111111111111111111","maxTimeoutSeconds":60,"extra":{"name":"Bridged USDC (Kite AI)","version":"2"}}]}}
+# mock-only sequence: (no verify/upstream/settle)
+# Subtest: AC-01: testnet 402 challenge matches exact price, asset, network, payee and EIP-712 domain
+ok 5 - AC-01: testnet 402 challenge matches exact price, asset, network, payee and EIP-712 domain
+  ---
+  duration_ms: 9.707333
+  type: 'test'
+  ...
+# {"http_status":402,"payment_required":{"x402Version":2,"error":"Payment required","resource":{"url":"http://127.0.0.1:55157/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m%2Cwind_speed_10m&hourly=temperature_2m&forecast_days=1","description":"Open-Meteo weather forecast for a coordinate","mimeType":"application/json"},"accepts":[{"scheme":"exact","network":"eip155:2368","amount":"123456000000000000","asset":"0x38129cf4CE5E183eFF248F42A7D345Bb1B47621A","payTo":"0x1111111111111111111111111111111111111111","maxTimeoutSeconds":60,"extra":{"name":"pieUSD","version":"1"}}]}}
+# mock-only sequence: (no verify/upstream/settle)
+# Subtest: AC-01/04: draft manifest, env defaults and runtime challenge agree
+ok 6 - AC-01/04: draft manifest, env defaults and runtime challenge agree
+  ---
+  duration_ms: 4.62225
+  type: 'test'
+  ...
+# mock-only sequence: (no verify/upstream/settle)
+# Subtest: AC-02: verify -> upstream -> complete body -> settle; receipt and forecast returned
+ok 7 - AC-02: verify -> upstream -> complete body -> settle; receipt and forecast returned
+  ---
+  duration_ms: 19.589791
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream -> upstream:complete -> settle
+# Subtest: AC-03: invalid verified signature never calls upstream or settle
+ok 8 - AC-03: invalid verified signature never calls upstream or settle
+  ---
+  duration_ms: 5.819375
+  type: 'test'
+  ...
+# mock-only sequence: verify
+# Failed to decode PAYMENT-SIGNATURE header: Error: Invalid payment signature header
+#     at decodePaymentSignatureHeader (file:///Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/@x402/core/dist/esm/chunk-RAWLCYSQ.mjs:2306:11)
+#     at x402HTTPResourceServer.extractPayment (file:///Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/@x402/core/dist/esm/chunk-RAWLCYSQ.mjs:3077:16)
+#     at x402HTTPResourceServer.processHTTPRequest (file:///Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/@x402/core/dist/esm/chunk-RAWLCYSQ.mjs:2513:33)
+#     at file:///Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/dist/app.js:70:39
+#     at Layer.handleRequest (/Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/router/lib/layer.js:152:17)
+#     at next (/Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/router/lib/route.js:157:13)
+#     at Route.dispatch (/Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/router/lib/route.js:117:3)
+#     at handle (/Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/router/index.js:435:11)
+#     at Layer.handleRequest (/Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/router/lib/layer.js:152:17)
+#     at /Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/node_modules/router/index.js:295:15
+# Subtest: AC-03: malformed signature never calls facilitator, upstream or settle
+ok 9 - AC-03: malformed signature never calls facilitator, upstream or settle
+  ---
+  duration_ms: 3.106125
+  type: 'test'
+  ...
+# mock-only sequence: (no verify/upstream/settle)
+# Subtest: AC-03: facilitator verify outage never calls upstream or settle or exposes its body
+ok 10 - AC-03: facilitator verify outage never calls upstream or settle or exposes its body
+  ---
+  duration_ms: 4.758208
+  type: 'test'
+  ...
+# mock-only sequence: verify
+# Subtest: AC-04: upstream 400 never settles and does not reflect credentials
+ok 11 - AC-04: upstream 400 never settles and does not reflect credentials
+  ---
+  duration_ms: 6.3035
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream 401 never settles and does not reflect credentials
+ok 12 - AC-04: upstream 401 never settles and does not reflect credentials
+  ---
+  duration_ms: 5.075584
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream 404 never settles and does not reflect credentials
+ok 13 - AC-04: upstream 404 never settles and does not reflect credentials
+  ---
+  duration_ms: 4.368209
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream 429 never settles and does not reflect credentials
+ok 14 - AC-04: upstream 429 never settles and does not reflect credentials
+  ---
+  duration_ms: 4.426709
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream 500 never settles and does not reflect credentials
+ok 15 - AC-04: upstream 500 never settles and does not reflect credentials
+  ---
+  duration_ms: 6.274458
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream 503 never settles and does not reflect credentials
+ok 16 - AC-04: upstream 503 never settles and does not reflect credentials
+  ---
+  duration_ms: 4.6535
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: timeout during upstream headers never settles
+ok 17 - AC-04: timeout during upstream headers never settles
+  ---
+  duration_ms: 155.970375
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: timeout during upstream body never settles
+ok 18 - AC-04: timeout during upstream body never settles
+  ---
+  duration_ms: 167.178125
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream connection refused never settles
+ok 19 - AC-04: upstream connection refused never settles
+  ---
+  duration_ms: 13.964875
+  type: 'test'
+  ...
+# mock-only sequence: verify
+# Subtest: AC-04: upstream truncated never settles
+ok 20 - AC-04: upstream truncated never settles
+  ---
+  duration_ms: 14.356917
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream invalid-json never settles
+ok 21 - AC-04: upstream invalid-json never settles
+  ---
+  duration_ms: 9.350834
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream wrong-shape never settles
+ok 22 - AC-04: upstream wrong-shape never settles
+  ---
+  duration_ms: 8.287792
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream invalid-coordinates never settles
+ok 23 - AC-04: upstream invalid-coordinates never settles
+  ---
+  duration_ms: 6.402541
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream oversize never settles
+ok 24 - AC-04: upstream oversize never settles
+  ---
+  duration_ms: 14.879208
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream redirect never settles
+ok 25 - AC-04: upstream redirect never settles
+  ---
+  duration_ms: 6.440458
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream reflected-key never settles
+ok 26 - AC-04: upstream reflected-key never settles
+  ---
+  duration_ms: 4.542458
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream encoded-key never settles
+ok 27 - AC-04: upstream encoded-key never settles
+  ---
+  duration_ms: 4.457625
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream reflected-auth never settles
+ok 28 - AC-04: upstream reflected-auth never settles
+  ---
+  duration_ms: 4.722125
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-04: upstream reflected-token never settles
+ok 29 - AC-04: upstream reflected-token never settles
+  ---
+  duration_ms: 4.343125
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream
+# Subtest: AC-02 failure: settleFailure withholds forecast and success receipt
+ok 30 - AC-02 failure: settleFailure withholds forecast and success receipt
+  ---
+  duration_ms: 4.534375
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream -> upstream:complete -> settle
+# Subtest: AC-02 failure: settleUnavailable withholds forecast and success receipt
+ok 31 - AC-02 failure: settleUnavailable withholds forecast and success receipt
+  ---
+  duration_ms: 5.233792
+  type: 'test'
+  ...
+# mock-only sequence: verify -> upstream -> upstream:complete -> settle
+# Subtest: Only GET /v1/forecast is paid; health is free and unsupported routes/methods have no side effects
+ok 32 - Only GET /v1/forecast is paid; health is free and unsupported routes/methods have no side effects
+  ---
+  duration_ms: 5.951916
+  type: 'test'
+  ...
+# mock-only sequence: (no verify/upstream/settle)
+# Subtest: Invalid configuration fails before serving traffic
+ok 33 - Invalid configuration fails before serving traffic
+  ---
+  duration_ms: 0.417042
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 787.518625
+
+Time: 2026-09-18T15:13:16.245Z
+Directory: services/open-meteo-weather
+Command: node --check scripts/acceptance.mjs
+Exit: 0
+
+Time: 2026-09-18T15:13:16.269Z
+Directory: services/open-meteo-weather
+Command: node --check scripts/acceptance-lib.mjs
+Exit: 0
+
+Completed: 2026-09-18T15:13:16.269Z
+Result: PASS (local only)

@@ -49,3 +49,20 @@ jobs:
             echo "== $pkg"
             (cd "$pkg" && npm ci && npm run typecheck)
           done
+
+  weather-acceptance:
+    name: weather payment flow acceptance (mock services)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/open-meteo-weather
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: services/open-meteo-weather/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test

@@ -1,0 +1,8 @@
+{
+  "kind": "deployed-unpaid-check",
+  "started_at": "2026-09-18T15:15:39.060Z",
+  "outcome": "failed_or_incomplete",
+  "endpoints": [],
+  "failure_stage": "configuration",
+  "completed_at": "2026-09-18T15:15:39.074Z"
+}

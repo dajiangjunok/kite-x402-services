@@ -1,0 +1,1 @@
+Acceptance incomplete at configuration; see /Users/wangyongjie/Desktop/kite-x402/kite-x402-services/services/open-meteo-weather/evidence/online-2026-09-18T15-15-39.060Z.json. No payment is retried automatically.

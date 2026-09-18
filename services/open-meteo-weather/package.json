@@ -5,10 +5,13 @@
   "type": "module",
   "description": "Open-Meteo forecast API behind x402 on the Kite chain",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
-    "start": "tsx src/index.ts",
+    "dev": "node --env-file-if-exists=.env --import tsx --watch src/index.ts",
+    "start": "node --env-file-if-exists=.env --import tsx src/index.ts",
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test --test-reporter=tap test/*.test.mjs",
+    "acceptance": "npm run build && node --env-file-if-exists=.env scripts/acceptance.mjs",
+    "evidence": "node scripts/record-checks.mjs"
   },
   "dependencies": {
     "@x402/core": "^2.25.0",
@@ -20,6 +23,8 @@
     "@types/express": "^5.0.3",
     "@types/node": "^24.3.0",
     "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "viem": "^2.56.3",
+    "yaml": "^2.9.1"
   }
 }
